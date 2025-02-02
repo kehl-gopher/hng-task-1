@@ -67,4 +67,55 @@ func TestNumberIsPrime(t *testing.T) {
 		isPrime = 47
 		assert.True(t, isPrime.checkIsPrime(), nil)
 	})
+
+	// check for negative number
+	t.Run("check if a -7 is prime number", func(t *testing.T) {
+		isPrime = -7
+		assert.False(t, isPrime.checkIsPrime(), "bitch can never be prime")
+	})
+}
+
+func TestIsPerfectNumber(t *testing.T) {
+	num := Parity(6)
+
+	assert.True(t, num.isPerfectNumber(), "6 the perfect bitch")
+
+	num = 496
+	assert.True(t, num.isPerfectNumber(), nil)
+
+	num = 8128
+	assert.True(t, num.isPerfectNumber(), nil)
+
+	t.Run("Not perfect ", func(t *testing.T) {
+		num = 21
+		assert.False(t, num.isPerfectNumber(), nil)
+	})
+
+	t.Run("0 is not Perfect", func(t *testing.T) {
+		num = 0
+		assert.False(t, num.isPerfectNumber(), nil)
+
+	})
+
+	t.Run("12 ain't perfect", func(t *testing.T) {
+		num = 12
+		assert.False(t, num.isPerfectNumber(), nil)
+	})
+
+	t.Run("8126 ain't perfect", func(t *testing.T) {
+		num = 8126
+		assert.False(t, num.isPerfectNumber(), nil)
+	})
+}
+
+func TestCalcSum(t *testing.T) {
+	a := Parity(317)
+
+	assert.Equal(t, 11, a.calcSumOfNumbers(), nil)
+
+	t.Run("test -317 equal 11", func(t *testing.T) {
+		a = -317
+		assert.Equal(t, 11, a.calcSumOfNumbers(), nil)
+	})
+
 }

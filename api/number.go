@@ -50,3 +50,38 @@ func (a Parity) checkIsPrime() bool {
 	}
 	return true
 }
+
+func (a Parity) isPerfectNumber() bool {
+
+	if a < 2 {
+		// < 1 not perfect
+		return false
+	}
+
+	sum := Parity(1)
+
+	for i := Parity(2); i*i <= a; i++ {
+		if a%i == 0 {
+			sum += i
+
+			if i != a/i {
+				sum += a / i
+			}
+		}
+
+	}
+
+	return sum == a
+}
+
+// calculate the sum of numbers
+func (a Parity) calcSumOfNumbers() int {
+	sum := 0
+
+	temp := Parity(math.Abs(float64(a)))
+	for temp > 0 {
+		sum += int(temp % 10)
+		temp /= 10
+	}
+	return sum
+}

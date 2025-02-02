@@ -23,7 +23,7 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
-	router.HandlerFunc(http.MethodGet, "/classify-number", classifyNumber)
+	router.HandlerFunc(http.MethodGet, "/api/classify-number", classifyNumber)
 	log.Printf("Server connected on port %s", port)
 	err := http.ListenAndServe(fmt.Sprintf(":%s", port), router)
 	log.Fatal(err)
