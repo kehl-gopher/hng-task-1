@@ -10,25 +10,25 @@ import (
 func TestArmStrong(t *testing.T) {
 
 	n := Parity(370)
-	assert.True(t, n.checkNumberIsArmStrong(), "You narcissitic bitch")
+	assert.True(t, n.checkNumberIsArmStrong(), nil)
 
 	b := Parity(300)
-	assert.False(t, b.checkNumberIsArmStrong(), "You are not narcissitic I guess")
+	assert.False(t, b.checkNumberIsArmStrong(), nil)
 }
 
 // check for the parity of a  number
 func TestIfNumberIsEvenOrOdd(t *testing.T) {
 	e := Parity(100)
-	assert.Equal(t, "even", e.checkParity(), "Even number you just bloody evil")
+	assert.Equal(t, "even", e.checkParity(), nil)
 	o := Parity(99)
 
-	assert.Equal(t, "odd", o.checkParity(), "Odd number you ugly asf")
+	assert.Equal(t, "odd", o.checkParity(), nil)
 }
 
 func TestNumberIsPrime(t *testing.T) {
 
 	isPrime := Parity(10)
-	assert.False(t, isPrime.checkIsPrime(), "why the fuck are you prime")
+	assert.False(t, isPrime.checkIsPrime(), nil)
 
 	t.Run("Check if 0 return not prime", func(t *testing.T) {
 		isPrime = Parity(0)
@@ -42,13 +42,13 @@ func TestNumberIsPrime(t *testing.T) {
 
 	t.Run("Check if 3 is prime", func(t *testing.T) {
 		isPrime = 3
-		assert.True(t, isPrime.checkIsPrime(), "Why you not prime")
+		assert.True(t, isPrime.checkIsPrime(), nil)
 	})
 
 	// check if 2 returned a prime
 	t.Run("Check if 2 is prime", func(t *testing.T) {
 		isPrime = 2
-		assert.True(t, isPrime.checkIsPrime(), "Dude you meant to be prime")
+		assert.True(t, isPrime.checkIsPrime(), nil)
 	})
 
 	t.Run("check 7 is prime", func(t *testing.T) {
@@ -71,14 +71,14 @@ func TestNumberIsPrime(t *testing.T) {
 	// check for negative number
 	t.Run("check if a -7 is prime number", func(t *testing.T) {
 		isPrime = -7
-		assert.False(t, isPrime.checkIsPrime(), "bitch can never be prime")
+		assert.False(t, isPrime.checkIsPrime(), nil)
 	})
 }
 
 func TestIsPerfectNumber(t *testing.T) {
 	num := Parity(6)
 
-	assert.True(t, num.isPerfectNumber(), "6 the perfect bitch")
+	assert.True(t, num.isPerfectNumber(), nil)
 
 	num = 496
 	assert.True(t, num.isPerfectNumber(), nil)

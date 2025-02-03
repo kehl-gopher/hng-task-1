@@ -154,7 +154,7 @@ For example:
 The API is deployed and can be accessed publicly.
 
 To deploy the API:
-1. Choose a cloud platform (e.g., Heroku, Koyeb, Render).
+1. Choose a cloud platform  Koyeb
 2. Follow the deployment instructions for the chosen platform.
 3. Ensure the application is publicly accessible and can handle GET requests at the `/api/classify-number` endpoint.
 
@@ -162,7 +162,7 @@ To deploy the API:
 
 To test the API:
 1. Run the API locally or use the hosted version.
-2. Send GET requests to the `/classify-number` endpoint with various valid and invalid numbers.
+2. Send GET requests to the `/api/classify-number` endpoint with various valid and invalid numbers.
 3. Verify that the responses are in the correct JSON format.
 4. Check that the API correctly classifies numbers as prime, perfect, Armstrong, odd, or even.
 
