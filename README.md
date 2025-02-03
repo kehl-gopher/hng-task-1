@@ -95,7 +95,7 @@ The API uses a combination of these checks and returns a comprehensive response 
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/number-classification-api.git
+   git clone https://github.com/kehl-gopher/hng-task-1.git
    ```
 
 2. **Install Go (if not installed)**:
@@ -121,7 +121,7 @@ Once the server is running, you can interact with the API by sending GET request
 
 - **Request**:
   ```bash
-  GET http://localhost:8080/api/classify-number?number=371
+  GET https://curly-joelle-hng-ef7ab010.koyeb.app/api/classify-number?number=371
   ```
 
 - **Response**:
