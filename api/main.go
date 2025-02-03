@@ -48,14 +48,13 @@ type Parity int // a fixated type on integer
 
 // classify number api router
 func classifyNumber(w http.ResponseWriter, r *http.Request) {
-	param, err := strconv.Atoi(r.URL.Query().Get("number"))
-	// throw a bad response error
+	que := r.URL.Query().Get("number")
+	param, err := strconv.Atoi(que)
 	if err != nil {
-		errMess := ErrMessage{Number: "alphabet", Error: true}
+		errMess := ErrMessage{Number: que, Error: true}
 		bt, err := json.Marshal(errMess)
 
 		if err != nil {
-			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -63,35 +62,66 @@ func classifyNumber(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(bt))
 		return
 	}
-	a, err := sendRequest(param)
+	par := Parity(param)
+	data, err := sendRequest(par)
 
 	if err != nil {
-		fmt.Println(err)
+		errMess := ErrMessage{Number: que, Error: true}
+		bt, err := json.Marshal(errMess)
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(bt))
 		return
 	}
-	fmt.Println(a)
-	w.Write([]byte(fmt.Sprintf("%d", param)))
+
+	// collect data
+	resp := struct {
+		Number     Parity   `json:"number"`
+		IsPrime    bool     `json:"is_prime"`
+		IsPerfect  bool     `json:"is_perfect"`
+		Properties []string `json:"properties"`
+		DigitSum   int      `json:"digit_sum"`
+		FunFact    string   `json:"fun_fact"`
+	}{
+		Number:     par,
+		IsPrime:    par.checkIsPrime(),
+		IsPerfect:  par.isPerfectNumber(),
+		Properties: numberProperties(par),
+		DigitSum:   par.calcSumOfNumbers(),
+		FunFact:    data,
+	}
+
+	jsonData, err := json.Marshal(resp)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.Write([]byte(jsonData))
 }
 
-// send user request
-func sendRequest(qParam int) (*http.Response, error) {
+// send request to numbers api
+func sendRequest(qParam Parity) (string, error) {
 
 	params := url.Values{}
 
 	params.Add("", fmt.Sprint(qParam))
-	fullUrl := fmt.Sprintf("http://numbersapi.com/%d/math?json", qParam)
+	fullUrl := fmt.Sprintf("http://numbersapi.com/%d/math", qParam)
 	req, err := http.NewRequest(http.MethodGet, fullUrl, nil)
 
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 	client := http.Client{}
 
 	resp, err := client.Do(req)
 
 	if err != nil {
-		fmt.Println(err)
-		return nil, err
+		return "", err
 	}
 
 	defer resp.Body.Close()
@@ -99,11 +129,21 @@ func sendRequest(qParam int) (*http.Response, error) {
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
-		return nil, err
+		return "", err
 	}
-
-	fmt.Println(string(data))
-	return resp, nil
+	stringData := string(data)
+	return stringData, nil
 }
 
 // checks if a number is either even or odd
+func numberProperties(num Parity) []string {
+
+	prop := make([]string, 0)
+
+	if num.checkNumberIsArmStrong() == true {
+		prop = append(prop, "armstrong")
+	}
+	prop = append(prop, num.checkParity())
+
+	return prop
+}
